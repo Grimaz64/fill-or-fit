@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+
+	<title>EXAMPLE IMAGE FIT</title>
+	<meta name="description" content="EXAMPLE IMAGE FIT" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			overflow: hidden;
+		}
+
+		.wrapper-image {
+			position: relative;
+			margin: 50px 50px;
+			border: 2px solid black;
+			width: 80%;
+			height: 60%;
+			overflow: hidden;
+		}
+
+		.fillorfit {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="wrapper-image">
+		<img src="koala.jpg" alt="koala" class="fillorfit" />
+	</div>
+	<div class="wrapper-image">
+		<img src="koala.jpg" alt="koala" class="fillorfit" />
+	</div>
+
+
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="jquery.fillorfit.js"></script>
+	<script>
+		$(document).ready(function() {
+
+			var nbLoaded = 0;
+			var nbImg = $('.fillorfit').length;
+			var resizeTimer = null;
+
+
+			$('.fillorfit').fillorfit({
+	            // ratio:           16/9, // when not image, specify ratio
+	            // ofParentHeight:  100, //% of parent Height
+	            // ofParentWidth:   100, //% of parent Width
+	            // deltaHeight:     0, //si vous voulez une marie louise
+	            // deltaWidth:      0, //si vous voulez une marie louise
+				method:  		 'fit',     // fill/fit
+				verticalAlign: 	 'center',  // top/bottom/center
+				horizontalAlign: 'center',	// left/right/center
+				maxWidth:        'initial', // px || 'initial'
+				maxHeight:       'initial', // px || 'initial'
+				afterResize:     function() {
+					console.log('fillorfit resize done for img', this);
+
+					clearTimeout(resizeTimer);
+					resizeTimer = setTimeout(function() {
+						console.log('fillorfit all resize done');
+					}, 0);
+				},
+			}, function() {
+				//callback
+				console.log('fillorfit done for img', this);
+
+				nbLoaded++;
+				if (nbImg === nbLoaded) {
+					console.log('all fillorfit done');
+				}
+
+			});
+
+		});
+	</script>
+</body>
+</html>
